@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found | etwee.ai</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .container {
+        max-width: 600px;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .bg-gradient {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(129, 140, 248, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(165, 180, 252, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.05) 0%, transparent 70%);
+        z-index: -1;
+      }
+
+      .brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 2rem;
+      }
+
+      .error-code {
+        font-size: clamp(5rem, 18vw, 10rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        color: #818cf8;
+        margin-bottom: 0.5rem;
+      }
+
+      .icon-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        color: #818cf8;
+      }
+
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: #f8fafc;
+      }
+
+      p {
+        font-size: 1.125rem;
+        color: #94a3b8;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+
+      .divider-line {
+        width: 60px;
+        height: 2px;
+        background: rgba(129, 140, 248, 0.3);
+      }
+
+      .divider-dot {
+        width: 8px;
+        height: 8px;
+        background: rgba(129, 140, 248, 0.5);
+        border-radius: 50%;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background: #818cf8;
+        color: #f8fafc;
+      }
+
+      .btn-primary:hover {
+        background: #a5b4fc;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(129, 140, 248, 0.3);
+      }
+
+      .lang-info {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+      <div class="brand">etwee.ai</div>
+      <div class="error-code">404</div>
+      <h1 id="title">Page Not Found</h1>
+      <p id="description">
+        The page you're looking for doesn't exist. Let's get you back where you need to go.
+      </p>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <a href="/" class="btn btn-primary" id="homeLink">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          />
+        </svg>
+        <span id="homeText">Return Home</span>
+      </a>
+
+      <p class="lang-info" id="langInfo"></p>
+    </div>
+
+    <script>
+      const translations = {
+        en: {
+          title: 'Page Not Found',
+          description:
+            "The page you're looking for doesn't exist. Let's get you back where you need to go.",
+          homeText: 'Return Home',
+        },
+        fr: {
+          title: 'Page introuvable',
+          description:
+            "La page que vous recherchez n'existe pas. Laissez-nous vous ramener là où vous devez aller.",
+          homeText: "Retour à l'accueil",
+        },
+      };
+
+      // Detect language from URL path
+      const supportedLangs = ['en', 'fr'];
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      let lang = 'en';
+
+      if (pathParts.length > 0 && supportedLangs.includes(pathParts[0])) {
+        lang = pathParts[0];
+      } else if (
+        pathParts[0] &&
+        pathParts[0].length === 2 &&
+        !supportedLangs.includes(pathParts[0])
+      ) {
+        // Could be a locale like 'en/' or wrong locale
+        lang = 'en';
+      }
+
+      const t = translations[lang] || translations.en;
+
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('description').textContent = t.description;
+      document.getElementById('homeText').textContent = t.homeText;
+
+      // Update links with language prefix
+      const baseUrl = '/' + lang + '/';
+      document.getElementById('homeLink').href = baseUrl;
+
+      document.documentElement.lang = lang;
+      document.getElementById('langInfo').textContent = 'Current language: ' + lang.toUpperCase();
+    </script>
+  </body>
+</html>
